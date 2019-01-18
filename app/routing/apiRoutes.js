@@ -41,7 +41,7 @@ module.exports = function(app) {
     // It will do this by sending out the value "true" have a table
     // req.body is available since we're using the body parsing middleware
    var userdata=req.body;
-    for (i=0; i = friendsData.length; i++) {
+    for (i=0; i = userdata.length; i++) {
       friendsData[i].push(req.body);
       
       //gets the last object that was insert from the client form
