@@ -24,10 +24,11 @@ module.exports = function(app) {
   app.post("/api/friends", function(req, res) {
    var userData=req.body;
    var storedDifference = [];
-   var results = 0;
+
 
    //outer loop 
     for (var i=0; i < friendsArray.length; i++) {
+      let results = 0
       for (var j=0; j < friendsArray[i].scores.length; j++){
         results += (parseInt(userData.scores[j]) - parseInt(friendsArray[i].scores[j]));
       }
