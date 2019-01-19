@@ -1,15 +1,8 @@
 //PSEUDOCODE AND OUTLINE TAKEN FROM HOT RESTAURANT
 
 
-
-// ===============================================================================
-// LOAD DATA
-// We are linking our routes to a series of "data" sources.
-// These data sources hold arrays of information on table-data, waitinglist, etc.
-// ===============================================================================
-
-var friendsData = require("./app/data/friends.js");
-
+var friendsArray = require("../data/friends");
+var arraySort = require ("array-sort");
 
 
 // ===============================================================================
@@ -18,34 +11,37 @@ var friendsData = require("./app/data/friends.js");
 
 module.exports = function(app) {
   // API GET Requests
-  // Below code handles when users "visit" a page.
-  // In each of the below cases when a user visits a link
-  // (ex: localhost:PORT/api/admin... they are shown a JSON of the data in the table)
   // ---------------------------------------------------------------------------
 
   app.get("/api/friends", function(req, res) {
-    res.json(friendsData);
+    res.json(friendsArray);
   });
 
 
   // API POST Requests
-  // Below code handles when a user submits a form and thus submits data to the server.
-  // In each of the below cases, when a user submits form data (a JSON object)
-  // ...the JSON is pushed to the appropriate JavaScript array
-  // (ex. User fills out a reservation request... this data is then sent to the server...
-  // Then the server saves the data to the tableData array)
   // ---------------------------------------------------------------------------
 
   app.post("/api/friends", function(req, res) {
-    // Note the code here. Our "server" will respond to requests and let users know if they have a table or not.
-    // It will do this by sending out the value "true" have a table
-    // req.body is available since we're using the body parsing middleware
-   var userdata=req.body;
-    for (i=0; i = userdata.length; i++) {
-      friendsData[i].push(req.body);
-      
-      //gets the last object that was insert from the client form
-      res.json(friendsData[friendsData.length-1]);
+   var userData=req.body;
+   var storedDifference = [];
+   var results = 0;
+
+   //outer loop 
+    for (var i=0; i < friendsArray.length; i++) {
+      for (var j=0; j < friendsArray[i].scores.length; j++){
+        results += (parseInt(userData.scores[j]) - parseInt(friendsArray[i].scores[j]));
+      }
+      storedDifference.push(
+      {
+        name: friendsArray[i].name,
+        pic: friendsArray[i].photo,
+        totalDifference: Math.abs(results)
+      });
     }
+    arraySort(storedDifference, 'totalDifference');
+
+    friendsArray.push(userData);
+
+    return res.json(storedDifference[0]);
   });
 };

@@ -183,16 +183,30 @@
 
         <!-- ATTEMPT AT THE MODAL pls work-->
 
-        <div id="surveyModal" class="modal">
-            <div class="modal-content">
-                <h3>YOUR NEW BEST FRIEND</h3>
-                <p id="match-name"></p>
-                <p id="match-pic"></p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-        </div>
+        <div class="modal" id="surveyModal" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">YOUR NEW BEST FRIEND</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <p id="modal-text"></p>
+                      <div>
+                          <img id="modal-pic" style="width: 250px; height: 250px;">
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
 
         <footer class="footer">
             <div class="container">
@@ -202,10 +216,39 @@
         </footer>
 
     </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script type="text/javascript">
+    
+    $("#submit").on('click', function(){
+        var newUser = 
+        {
+           name: $("#name").val(),
+           pic: $("#pic").val(),
+           scores: [
+       parseInt($("#q1").val()), 
+       parseInt($("#q2").val()),
+       parseInt($("#q3").val()),
+       parseInt($("#q4").val()),
+       parseInt($("#q5").val()),
+       parseInt($("#q6").val()),
+       parseInt($("#q7").val()),
+       parseInt($("#q8").val()),
+       parseInt($("#q9").val()),
+       parseInt($("#q10").val())
+    ]}
+
+    $.post("/api/friends", friendsArray, function(data) {
+        $("#modal-text").text(data.name);
+        $("#modal-pic").attr("src", data.photo);
+        $(".modal").modal("toggle");
+    })
+
+    })
+
+
+    </script>
+
 </body>
-<script>
-
-
-</script>
-
 </html>
