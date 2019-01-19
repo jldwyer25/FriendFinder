@@ -34,7 +34,7 @@ module.exports = function(app) {
       storedDifference.push(
       {
         name: friendsArray[i].name,
-        pic: friendsArray[i].photo,
+        pic: friendsArray[i].pic,
         totalDifference: Math.abs(results)
       });
     }

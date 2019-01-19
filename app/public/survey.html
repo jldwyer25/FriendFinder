@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-    <!-- font awesome -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
 </head>
 
@@ -200,7 +199,6 @@
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                      <button type="button" class="btn btn-primary">Save changes</button>
                     </div>
                   </div>
                 </div>
@@ -217,12 +215,10 @@
 
     </div>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script type="text/javascript">
     
     $("#submit").on('click', function(){
-        var newUser = 
+        var userData = 
         {
            name: $("#name").val(),
            pic: $("#pic").val(),
@@ -239,13 +235,13 @@
        parseInt($("#q10").val())
     ]}
 
-    $.post("/api/friends", friendsArray, function(data) {
+    $.post("/api/friends", userData, function(data) {
         $("#modal-text").text(data.name);
-        $("#modal-pic").attr("src", data.photo);
+        $("#modal-pic").attr("src", data.pic);
         $(".modal").modal("toggle");
     })
 
-    })
+    });
 
 
     </script>
